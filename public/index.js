@@ -1,6 +1,19 @@
 let transactions = [];
 let myChart;
 
+// Registers service worker with new path
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+          .then(reg => {
+              console.log('Registration succeeded. Scope is ' + reg.scope);
+          })
+          .catch(registrationError => {
+              console.log('SW registration failed: ', registrationError);
+          });
+  });
+}
+
 fetch("/api/transaction")
   .then(response => {
     return response.json();
